@@ -1,0 +1,46 @@
+{% extends "planning/base.html" %}
+{% block titre %}Semaine {{ num_semaine }}{% endblock %}
+{% block contenu %}
+{% if bandeaux %}{% for b in bandeaux %}{% include "planning/_bandeau.html" with bandeau_texte=b.message statique=True %}{% endfor %}{% endif %}
+<div class="toolbar">
+  <div class="weeknav">
+    <a class="btn icon" href="?d={{ prec|date:'Y-m-d' }}{% if weekend %}&we=1{% endif %}{% if zone_id %}&zone={{ zone_id }}{% endif %}{% for m in masques %}&sans={{ m }}{% endfor %}" aria-label="Semaine précédente">‹</a>
+    <a class="btn" href="?{% if weekend %}we=1{% endif %}{% if zone_id %}&zone={{ zone_id }}{% endif %}{% for m in masques %}&sans={{ m }}{% endfor %}">Cette semaine</a>
+    <a class="btn icon" href="?d={{ suiv|date:'Y-m-d' }}{% if weekend %}&we=1{% endif %}{% if zone_id %}&zone={{ zone_id }}{% endif %}{% for m in masques %}&sans={{ m }}{% endfor %}" aria-label="Semaine suivante">›</a>
+  </div>
+  <div class="wtitle"><h1>Semaine {{ num_semaine }}</h1><p>{{ libelle }}</p></div>
+  <form class="filters" method="get">
+    <input type="hidden" name="d" value="{{ debut|date:'Y-m-d' }}">
+    {% for m in masques %}<input type="hidden" name="sans" value="{{ m }}">{% endfor %}
+    {% if zones %}<select name="zone" aria-label="Filtrer par {{ site.libelle_zone|lower }}" onchange="this.form.submit()">
+      <option value="">Toutes les {{ site.libelle_zone|lower }}s</option>
+      {% for z in zones %}<option value="{{ z.pk }}" {% if zone_id == z.pk|stringformat:'s' %}selected{% endif %}>{{ z }}</option>{% endfor %}
+    </select>{% endif %}
+    <label class="toggle"><input type="checkbox" name="we" value="1" {% if weekend %}checked{% endif %} onchange="this.form.submit()"> Week-end</label>
+    <noscript><button class="btn" type="submit">Filtrer</button></noscript>
+    <a class="btn primary" href="{% url 'planning:nouvelle' site.code %}?d={% if debut <= auj and auj < suiv %}{{ auj|date:'Y-m-d' }}{% else %}{{ debut|date:'Y-m-d' }}{% endif %}">+ Nouvelle intervention</a>
+  </form>
+</div>
+<div class="chiprow" role="group" aria-label="Types affichés (cliquer pour masquer ou afficher)">
+  {% for t in types %}{% if t.code in masques %}
+  <a class="chip off" style="--c:{{ t.couleur }}" href="?d={{ debut|date:'Y-m-d' }}{% if weekend %}&we=1{% endif %}{% if zone_id %}&zone={{ zone_id }}{% endif %}{% for m in masques %}{% if m != t.code %}&sans={{ m }}{% endif %}{% endfor %}"><i></i>{{ t.nom }}</a>
+  {% else %}
+  <a class="chip" style="--c:{{ t.couleur }}" href="?d={{ debut|date:'Y-m-d' }}{% if weekend %}&we=1{% endif %}{% if zone_id %}&zone={{ zone_id }}{% endif %}{% for m in masques %}&sans={{ m }}{% endfor %}&sans={{ t.code }}"><i></i>{{ t.nom }}</a>
+  {% endif %}{% endfor %}
+</div>
+<div class="cal" style="--n:{{ nb }}">
+  <div class="cols heads">{% for j in jours %}<div class="dayhead{% if j.aujourdhui %} today{% endif %}"><b>{{ j.nom }}</b><span>{{ j.date|date:"j F" }}{% if j.aujourdhui %} · aujourd'hui{% endif %}</span></div>{% endfor %}</div>
+  {% if couloirs %}<div class="spans"><span class="lbl">Sur plusieurs jours</span>
+    {% for c in couloirs %}<div style="grid-column:{{ c.col }}/{{ c.colfin }};grid-row:{{ c.ligne }};display:grid">{% include "planning/_carte.html" with iv=c.iv rang=None mobile=False %}</div>{% endfor %}
+  </div>{% endif %}
+  <div class="cols days">{% for j in jours %}
+    <div class="day{% if j.aujourdhui %} today{% endif %}">
+      <span class="mhead">{{ j.date|date:"l j F"|capfirst }}{% if j.aujourdhui %} · aujourd'hui{% endif %}</span>
+      {% for iv, rang in j.multi %}{% include "planning/_carte.html" with iv=iv rang=rang mobile=True %}{% endfor %}
+      {% for iv in j.uniques %}{% include "planning/_carte.html" with iv=iv rang=None mobile=False %}{% endfor %}
+      <a class="add" href="{% url 'planning:nouvelle' site.code %}?d={{ j.date|date:'Y-m-d' }}">+ ajouter</a>
+    </div>{% endfor %}
+  </div>
+</div>
+<p class="legend-note">Les petits carrés sous chaque intervention indiquent le suivi sécurité : Proxyclick, visite de prévention, plan de prévention (vert = fait).</p>
+{% endblock %}

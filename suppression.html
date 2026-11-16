@@ -1,0 +1,10 @@
+{% extends "planning/base.html" %}
+{% block titre %}Supprimer{% endblock %}
+{% block contenu %}
+<section class="page narrow">
+  <h1>Supprimer cette intervention ?</h1>
+  <p><b>{{ iv.type.nom }}</b> · {{ iv.description }}<br><span class="muted">{{ iv.lieu }} · {{ iv.date_debut|date:"j F Y" }}</span></p>
+  <p class="hint">La suppression est définitive.</p>
+  <form method="post" class="actions">{% csrf_token %}<button class="btn danger" type="submit">Supprimer définitivement</button><a class="btn ghost" href="{% url 'planning:detail' site.code iv.pk %}">Annuler</a></form>
+</section>
+{% endblock %}

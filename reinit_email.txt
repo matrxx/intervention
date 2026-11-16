@@ -1,0 +1,8 @@
+{% autoescape off %}Bonjour {{ user.first_name }},
+
+Pour choisir un nouveau mot de passe sur l'outil de gestion des interventions du C2RMF, ouvrez ce lien (valable 3 jours) :
+
+{{ protocol }}://{{ domain }}{% url 'planning:reinit_confirmer' uidb64=uid token=token %}
+
+Si vous n'avez rien demandé, ignorez ce message : votre mot de passe actuel reste valable.
+{% endautoescape %}

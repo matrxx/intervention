@@ -1,0 +1,7 @@
+{% extends "planning/base.html" %}
+{% block titre %}Écrans{% endblock %}
+{% block contenu %}
+<section class="page narrow"><h1>Écran d'affichage</h1><p>Choisissez le site à afficher :</p>
+  <div class="actions">{% for s in sites %}<a class="btn primary" href="{% url 'planning:ecran' s.code %}">{{ s.nom }}</a>{% endfor %}</div>
+  <p class="hint">Sur le poste d'affichage, ouvrez directement l'adresse de l'écran du site et mettez le navigateur en plein écran (touche F11).</p></section>
+{% endblock %}

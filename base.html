@@ -1,0 +1,38 @@
+{% load static %}<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block titre %}Interventions{% endblock %}{% if site %} · {{ site.nom }}{% endif %}</title>
+<link rel="stylesheet" href="{% static 'planning/app.css' %}">
+{% if site %}<style>:root{--site:{{ site.couleur }}}</style>{% endif %}
+{% block tete %}{% endblock %}
+</head>
+<body class="{% block classe_body %}{% endblock %}">
+{% block corps %}
+{% if mode_dev %}<div class="dev-strip"><b>Mode test</b> : les e-mails ne partent pas, ils sont capturés dans la boîte de test (Mailpit).</div>{% endif %}
+<header class="topbar"><div class="topbar-in">
+  <a class="brand" href="{% url 'planning:accueil' %}"><b>Interventions</b><span>C2RMF{% if site %} · {{ site.nom }}{% endif %}</span></a>
+  {% if user.is_authenticated and site %}
+    {% for autre in autres_sites %}<a class="btn ghost" href="{% url 'planning:semaine' autre.code %}" title="Passer à l'espace de ce site">⇄ {{ autre.nom }}</a>{% endfor %}
+    <nav class="nav">
+      <a href="{% url 'planning:semaine' site.code %}" {% if onglet == 'semaine' %}aria-current="page"{% endif %}>Semaine</a>
+      <a href="{% url 'planning:ecran' site.code %}" target="_blank" rel="noopener">Écran d'affichage ↗</a>
+      {% if user.is_staff %}<a href="{% url 'planning:administration' site.code %}" {% if onglet == 'admin' %}aria-current="page"{% endif %}>Administration</a>{% endif %}
+    </nav>
+  {% endif %}
+  <div class="who">
+    {% if user.is_authenticated %}
+      <span>{{ user.nom_complet }}{% if user.is_staff %} <span class="muted">· administrateur</span>{% endif %}</span>
+      <form method="post" action="{% url 'planning:deconnexion' %}">{% csrf_token %}<button class="btn ghost" type="submit">Se déconnecter</button></form>
+    {% endif %}
+  </div>
+</div></header>
+<main>
+  {% if messages %}<ul class="messages">{% for m in messages %}<li class="{{ m.tags }}">{{ m }}</li>{% endfor %}</ul>{% endif %}
+  {% block contenu %}{% endblock %}
+</main>
+{% endblock %}
+<script src="{% static 'planning/app.js' %}" defer></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+﻿site;zone;zone_nom;niveau;ordre_niveau;code;libelle;active
+# Une ligne par salle. Les lignes commençant par # sont ignorées : supprimez ces exemples.
+# site = versailles ou louvre | zone = aile ou zone (G, H, ...) | ordre_niveau facultatif (-1 sous-sol, 0 RDC, 1 entresol, 2 1er étage...) | active = oui ou non (vide = oui)
+#versailles;G;avenue de Paris;RDC;0;G002A;Atelier dorure;oui
+#louvre;FL;Pavillon de Flore;Sous-sol;-1;FL-SS-01;Laboratoire;oui

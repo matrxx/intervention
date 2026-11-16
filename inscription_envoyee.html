@@ -1,0 +1,10 @@
+{% extends "planning/base.html" %}
+{% block titre %}Vérifiez votre messagerie{% endblock %}
+{% block contenu %}
+<section class="page narrow">
+  <h1>Vérifiez votre messagerie</h1>
+  <p>Un lien d'activation vient d'être envoyé à <b>{{ email }}</b>. Il est valable 3 jours.</p>
+  {% if mode_dev %}<p class="hint">Mode test : le message est dans la boîte de test Mailpit (port 8025 du serveur).</p>{% endif %}
+  <a class="btn" href="{% url 'planning:connexion' %}">Aller à la connexion</a>
+</section>
+{% endblock %}

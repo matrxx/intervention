@@ -1,0 +1,117 @@
+﻿site;zone;zone_nom;niveau;ordre_niveau;code;libelle;active
+versailles;G;avenue de Paris;RDC;0;G001A;Local de presse à bois;oui
+versailles;G;avenue de Paris;RDC;0;G001B;WC;oui
+versailles;G;avenue de Paris;RDC;0;G002A;Atelier Dorure;oui
+versailles;G;avenue de Paris;RDC;0;G002B;Atelier Ebenisterie;oui
+versailles;G;avenue de Paris;RDC;0;G004A;Douche;oui
+versailles;G;avenue de Paris;RDC;0;G004B;Vestiaire;oui
+versailles;G;avenue de Paris;RDC;0;G004C;Bureau;oui
+versailles;G;avenue de Paris;RDC;0;G005A;Atelier Ebenisterie;oui
+versailles;G;avenue de Paris;RDC;0;G005B;Réserve objets d'art;oui
+versailles;G;avenue de Paris;RDC;0;G005C;Atelier Ebenisterie;oui
+versailles;G;avenue de Paris;RDC;0;G006;Atelier Ebenisterie;oui
+versailles;G;avenue de Paris;RDC;0;G007A;Atelier Ebenisterie;oui
+versailles;G;avenue de Paris;RDC;0;G007B;Atelier d'arts graphiques;oui
+versailles;G;avenue de Paris;RDC;0;G009;Atelier peinture support toile GF;oui
+versailles;G;avenue de Paris;RDC;0;G010A;Local Rangement;oui
+versailles;G;avenue de Paris;RDC;0;G010B;Local de désinsectisation;oui
+versailles;G;avenue de Paris;RDC;0;G011A;Arrivée des œuvres;oui
+versailles;G;avenue de Paris;RDC;0;G011B;Arrivée des œuvres;oui
+versailles;G;avenue de Paris;Entresol;1;GE001;;oui
+versailles;G;avenue de Paris;Entresol;1;GE004;;oui
+versailles;G;avenue de Paris;Entresol;1;GE005;;oui
+versailles;G;avenue de Paris;Entresol;1;GE005B;;oui
+versailles;G;avenue de Paris;Entresol;1;GE006;;oui
+versailles;G;avenue de Paris;Entresol;1;GE007;;oui
+versailles;G;avenue de Paris;1er étage;2;G101;Atelier de tapisserie;oui
+versailles;G;avenue de Paris;1er étage;2;G102;Atelier de tapisserie;oui
+versailles;G;avenue de Paris;1er étage;2;G103A;Atelier de dorure;oui
+versailles;G;avenue de Paris;1er étage;2;G103B;Atelier de dorure;oui
+versailles;G;avenue de Paris;1er étage;2;G104A;WC;oui
+versailles;G;avenue de Paris;1er étage;2;G104B;Hall d'entrée;oui
+versailles;G;avenue de Paris;1er étage;2;G104C;Bureau;oui
+versailles;G;avenue de Paris;1er étage;2;G105;Bureaux SG;oui
+versailles;G;avenue de Paris;1er étage;2;G106;Atelier Art Graphique;oui
+versailles;G;avenue de Paris;1er étage;2;G107;Atelier Art Graphique;oui
+versailles;G;avenue de Paris;1er étage;2;G108A;Atelier métal;oui
+versailles;G;avenue de Paris;1er étage;2;G108B;Cabine de microsablage;oui
+versailles;G;avenue de Paris;1er étage;2;G108C;Stockage archéologie;oui
+versailles;G;avenue de Paris;1er étage;2;G109;Atelier peinture couche picturale GF;oui
+versailles;G;avenue de Paris;1er étage;2;G110A;Cabine de vernissage;oui
+versailles;G;avenue de Paris;1er étage;2;G110B;Atelier peinture couche picturale GF;oui
+versailles;G;avenue de Paris;2e étage;3;G201;Réserve des cadres;oui
+versailles;G;avenue de Paris;2e étage;3;G202;Réserve des cadres;oui
+versailles;G;avenue de Paris;2e étage;3;G203;Réserve des cadres;oui
+versailles;G;avenue de Paris;2e étage;3;G204A;Réserve des cadres;oui
+versailles;G;avenue de Paris;2e étage;3;G204B;Prise air neutre;oui
+versailles;G;avenue de Paris;2e étage;3;G205;Réserve des tableaux;oui
+versailles;G;avenue de Paris;2e étage;3;G206;Réserve des tableaux;oui
+versailles;G;avenue de Paris;2e étage;3;G207;Réserve des tableaux;oui
+versailles;G;avenue de Paris;2e étage;3;G208;Réserve des tableaux;oui
+versailles;G;avenue de Paris;2e étage;3;G209;Réserve des tableaux;oui
+versailles;G;avenue de Paris;2e étage;3;G210;Réserve des tableaux;oui
+versailles;H;avenue de Sceaux;RDC;0;H001A;PC sécurité;oui
+versailles;H;avenue de Sceaux;RDC;0;H001B;Vestiaire;oui
+versailles;H;avenue de Sceaux;RDC;0;H001C;Cuisine;oui
+versailles;H;avenue de Sceaux;RDC;0;H002;;oui
+versailles;H;avenue de Sceaux;RDC;0;H003A;;oui
+versailles;H;avenue de Sceaux;RDC;0;H003B;;oui
+versailles;H;avenue de Sceaux;RDC;0;H004A;;oui
+versailles;H;avenue de Sceaux;RDC;0;H004B;;oui
+versailles;H;avenue de Sceaux;RDC;0;H005;;oui
+versailles;H;avenue de Sceaux;RDC;0;H006A;;oui
+versailles;H;avenue de Sceaux;RDC;0;H008;;oui
+versailles;H;avenue de Sceaux;RDC;0;H009A;;oui
+versailles;H;avenue de Sceaux;RDC;0;H009B;;oui
+versailles;H;avenue de Sceaux;RDC;0;H009C;;oui
+versailles;H;avenue de Sceaux;Entresol;1;HE01A;Bureau;oui
+versailles;H;avenue de Sceaux;Entresol;1;HE01B;Réserve;oui
+versailles;H;avenue de Sceaux;Entresol;1;HE02;Bureau;oui
+versailles;H;avenue de Sceaux;Entresol;1;HE03A;Bureau;oui
+versailles;H;avenue de Sceaux;Entresol;1;HE03B;Bureau;oui
+versailles;H;avenue de Sceaux;Entresol;1;HE04;Bureau;oui
+versailles;H;avenue de Sceaux;1er étage;2;H101A;;oui
+versailles;H;avenue de Sceaux;1er étage;2;H101B;;oui
+versailles;H;avenue de Sceaux;1er étage;2;H101C;WC;oui
+versailles;H;avenue de Sceaux;1er étage;2;H102A;;oui
+versailles;H;avenue de Sceaux;1er étage;2;H102B;;oui
+versailles;H;avenue de Sceaux;1er étage;2;H103A;;oui
+versailles;H;avenue de Sceaux;1er étage;2;H103B;;oui
+versailles;H;avenue de Sceaux;1er étage;2;H104;;oui
+versailles;H;avenue de Sceaux;1er étage;2;H105;Réserve d'œuvres;oui
+versailles;H;avenue de Sceaux;1er étage;2;H106;Atelier de peinture;oui
+versailles;H;avenue de Sceaux;1er étage;2;H107;Atelier de peinture;oui
+versailles;H;avenue de Sceaux;1er étage;2;H108A;;oui
+versailles;H;avenue de Sceaux;1er étage;2;H108B;Cabine de vernissage;oui
+versailles;H;avenue de Sceaux;1er étage;2;H108C;Réserve;oui
+versailles;H;avenue de Sceaux;1er étage;2;H109;Atelier de peinture;oui
+versailles;H;avenue de Sceaux;1er étage;2;H110A;;oui
+versailles;H;avenue de Sceaux;1er étage;2;H110B;;oui
+versailles;H;avenue de Sceaux;1er étage;2;H111;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H201A;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H201B;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H202A;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H202B;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H202C;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H202D;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H203;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H204;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H205;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H206;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H207A;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H207B;;oui
+versailles;H;avenue de Sceaux;2e étage;3;H208A1;Bureau;oui
+versailles;H;avenue de Sceaux;2e étage;3;H208A2;Polissage;oui
+versailles;H;avenue de Sceaux;2e étage;3;H208A3;Bureau;oui
+versailles;H;avenue de Sceaux;2e étage;3;H208A4;Tirage N&B;oui
+versailles;H;avenue de Sceaux;2e étage;3;H208B;Salle de rayons X;oui
+versailles;H;avenue de Sceaux;2e étage;3;H208C;Salle de prise de vue;oui
+versailles;H;avenue de Sceaux;2e étage;3;H208D1;Développement radio;oui
+versailles;H;avenue de Sceaux;2e étage;3;H208D2;Local commande rayons X;oui
+versailles;H;avenue de Sceaux;2e étage;3;H208D3;Cuisine;oui
+versailles;H;avenue de Sceaux;2e étage;3;H208D4;Imagerie;oui
+versailles;H;avenue de Sceaux;2e étage;3;H208D5;Imagerie;oui
+versailles;H;avenue de Sceaux;2e étage;3;H209A;Salle d'examen;oui
+versailles;H;avenue de Sceaux;2e étage;3;H209B;Bureau;oui
+versailles;H;avenue de Sceaux;2e étage;3;H209C;Bureau;oui
+versailles;H;avenue de Sceaux;2e étage;3;H210;Atelier Art Graphique;oui

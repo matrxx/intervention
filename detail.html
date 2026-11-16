@@ -1,0 +1,29 @@
+{% extends "planning/base.html" %}
+{% block titre %}{{ iv.type.nom }}{% endblock %}
+{% block contenu %}
+<section class="page stripe" style="--c:{{ iv.type.couleur }}">
+  <a href="{% url 'planning:semaine' site.code %}?d={{ iv.date_debut|date:'Y-m-d' }}">← Retour à la semaine</a>
+  <span class="badge" style="--c:{{ iv.type.couleur }}"><i></i>{{ iv.type.nom }}</span>
+  <h1>{{ iv.description }}</h1>
+  <dl class="kv">
+    <dt>Quand</dt><dd>{% if iv.sur_plusieurs_jours %}du {{ iv.date_debut|date:"l j F" }} au {{ iv.date_fin|date:"l j F Y" }}{% else %}{{ iv.date_debut|date:"l j F Y"|capfirst }}{% endif %}<br>{% if iv.journee_entiere %}Journée entière{% else %}{{ iv.horaire }}{% if iv.sur_plusieurs_jours %} chaque jour{% endif %}{% endif %}</dd>
+    <dt>Lieu</dt><dd>{{ iv.lieu }}</dd>
+    <dt>Hôte</dt><dd>{{ iv.hote }}</dd>
+    {% if iv.entreprise %}<dt>Entreprise</dt><dd>{{ iv.entreprise }}</dd>{% endif %}
+    {% if iv.protocole %}<dt>Protocole / prévenance</dt><dd>{{ iv.protocole }}</dd>{% endif %}
+    {% if iv.observations %}<dt>Observations</dt><dd>{{ iv.observations|linebreaksbr }}</dd>{% endif %}
+    <dt>Déclarée par</dt><dd>{{ iv.cree_par.nom_complet }} · le {{ iv.cree_le|date:"j F Y à H\hi" }}</dd>
+  </dl>
+  <form class="seclist" method="post" action="{% url 'planning:securite' site.code iv.pk %}">{% csrf_token %}
+    <h2>Suivi sécurité</h2>
+    {% for champ, libelle, fait in iv.securite %}<label><input type="checkbox" name="{{ champ }}" {% if fait %}checked{% endif %} {% if not peut_modifier %}disabled{% endif %}> {{ libelle }}</label>{% endfor %}
+    {% if peut_modifier %}<div class="actions"><button class="btn" type="submit">Enregistrer le suivi</button><span class="hint">Toutes les cases ne s'appliquent pas à chaque intervention.</span></div>{% endif %}
+  </form>
+  <div class="actions">
+    {% if peut_modifier %}
+      <a class="btn primary" href="{% url 'planning:modifier' site.code iv.pk %}">Modifier</a>
+      <a class="btn danger" href="{% url 'planning:supprimer' site.code iv.pk %}">Supprimer</a>
+    {% else %}<span class="hint">Seul l'auteur ou un administrateur peut modifier cette intervention.</span>{% endif %}
+  </div>
+</section>
+{% endblock %}

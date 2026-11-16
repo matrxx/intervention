@@ -1,0 +1,22 @@
+{% extends "planning/base.html" %}
+{% block titre %}Administration{% endblock %}
+{% block contenu %}
+<h1 style="font-size:26px;margin-bottom:4px">Administration · {{ site.nom }}</h1>
+<p class="muted" style="margin:0 0 16px">{{ nb_salles }} salles · {{ nb_a_completer }} libellé{{ nb_a_completer|pluralize }} à compléter · {{ nb_inactives }} inactive{{ nb_inactives|pluralize }} · {{ nb_comptes }} compte{{ nb_comptes|pluralize }} actif{{ nb_comptes|pluralize }}</p>
+<div class="cards">
+  <div class="card"><h2>Importer la liste des locaux</h2><p>Remplacer ou compléter les salles de Versailles et du Louvre à partir d'un fichier CSV, avec aperçu avant import.</p>
+    <div class="actions"><a class="btn primary" href="{% url 'planning:import_salles' site.code %}">Importer un fichier</a></div></div>
+  <div class="card"><h2>Exporter les locaux</h2><p>Télécharger la liste actuelle au format d'import, pour la modifier dans Excel puis la réimporter.</p>
+    <div class="actions"><a class="btn" href="{% url 'planning:export_salles' %}?site={{ site.code }}">Ce site</a><a class="btn" href="{% url 'planning:export_salles' %}">Tous les sites</a><a class="btn ghost" href="{% url 'planning:modele_import' %}">Modèle vide</a></div></div>
+  <div class="card"><h2>Salles et libellés</h2><p>Corriger un libellé, désactiver une salle, une par une.</p>
+    <div class="actions"><a class="btn" href="{% url 'admin:planning_salle_changelist' %}?site__code__exact={{ site.code }}">Ouvrir la liste</a><a class="btn ghost" href="{% url 'admin:planning_salle_changelist' %}?site__code__exact={{ site.code }}&libelle__exact=">À compléter</a></div></div>
+  <div class="card"><h2>Bandeau d'alerte</h2><p>{% if bandeaux %}En cours : {% for b in bandeaux %}« {{ b.message }} »{% if not forloop.last %}, {% endif %}{% endfor %}.{% else %}Aucun bandeau affiché aujourd'hui.{% endif %} Texte blanc sur rouge en haut de l'écran.</p>
+    <div class="actions"><a class="btn primary" href="{% url 'admin:planning_bandeau_add' %}">Programmer un bandeau</a><a class="btn ghost" href="{% url 'admin:planning_bandeau_changelist' %}">Tous les bandeaux</a></div></div>
+  <div class="card"><h2>Types et couleurs</h2><p>Nom, couleur et ordre des catégories d'intervention.</p>
+    <div class="actions"><a class="btn" href="{% url 'admin:planning_typeintervention_changelist' %}">Modifier</a></div></div>
+  <div class="card"><h2>Comptes</h2><p>Donner le rôle administrateur (« statut équipe »), désactiver un compte, débloquer une connexion.</p>
+    <div class="actions"><a class="btn" href="{% url 'admin:planning_utilisateur_changelist' %}">Gérer les comptes</a></div></div>
+  <div class="card"><h2>Sites et zones</h2><p>Nom des sites, ailes ou zones, couleur repère.</p>
+    <div class="actions"><a class="btn" href="{% url 'admin:planning_site_changelist' %}">Modifier</a><a class="btn ghost" href="{% url 'admin:index' %}">Administration avancée</a></div></div>
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+<a class="ev{% if mobile %} md-only{% endif %}" style="--c:{{ iv.type.couleur }}" href="{% url 'planning:detail' site.code iv.pk %}">
+  <span class="ty">{{ iv.type.nom }}{% if rang %} · jour {{ rang }}/{{ iv.nb_jours }}{% endif %}</span>
+  <span class="t">{{ iv.horaire }}{% if iv.sur_plusieurs_jours and not rang %} · {{ iv.date_debut|date:"D j" }} → {{ iv.date_fin|date:"D j" }}{% endif %}</span>
+  <span class="d">{{ iv.description }}</span>
+  <span class="p">{{ iv.lieu }}</span>
+  <span class="p">Hôte : {{ iv.hote }}</span>
+  <span class="sec" title="Suivi sécurité{% for c, l, fait in iv.securite %} · {{ l }} : {{ fait|yesno:'fait,non coché' }}{% endfor %}">{% for c, l, fait in iv.securite %}<i class="{% if fait %}on{% endif %}"></i>{% endfor %}</span>
+</a>

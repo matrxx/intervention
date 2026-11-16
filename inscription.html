@@ -1,0 +1,18 @@
+{% extends "planning/base.html" %}
+{% block titre %}Créer un compte{% endblock %}
+{% block contenu %}
+<section class="page narrow" id="inscription">
+  <h1>Créer un compte</h1>
+  <p class="hint">Réservé aux adresses {% for d in domaines %}@{{ d }}{% if not forloop.last %}, {% endif %}{% endfor %}. Un lien d'activation vous sera envoyé par e-mail.</p>
+  <form method="post" novalidate style="display:flex;flex-direction:column;gap:12px">{% csrf_token %}
+    {% if form.non_field_errors %}<div class="err">{{ form.non_field_errors|join:" " }}</div>{% endif %}
+    {% include "planning/_champ.html" with champ=form.email %}
+    <div class="grid2">{% include "planning/_champ.html" with champ=form.first_name %}{% include "planning/_champ.html" with champ=form.last_name %}</div>
+    <p class="hint" style="margin:-4px 0 0">Ce nom apparaît comme hôte de vos interventions. Il est proposé d'après votre adresse ; corrigez-le si besoin (accents, nom composé).</p>
+    {% include "planning/_champ.html" with champ=form.password1 %}
+    {% include "planning/_champ.html" with champ=form.password2 %}
+    <button class="btn primary" type="submit">Créer mon compte</button>
+  </form>
+  <a href="{% url 'planning:connexion' %}">← Retour à la connexion</a>
+</section>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "planning/base.html" %}
+{% block titre %}Mot de passe oublié{% endblock %}
+{% block contenu %}<section class="page narrow"><h1>Mot de passe oublié</h1>
+<form method="post" style="display:flex;flex-direction:column;gap:12px">{% csrf_token %}{% include "planning/_champ.html" with champ=form.email %}<button class="btn primary" type="submit">Recevoir un lien</button></form>
+<a href="{% url 'planning:connexion' %}">← Retour à la connexion</a></section>{% endblock %}

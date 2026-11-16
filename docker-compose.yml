@@ -1,0 +1,66 @@
+# Interventions C2RMF — mode test (dev)
+# Démarrage : docker compose up -d --build     Journaux : docker compose logs -f web
+name: interventions
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    restart: unless-stopped
+    depends_on:
+      web:
+        condition: service_healthy
+    ports:
+      - "${PORT_HTTP:-80}:80"
+      # - "${PORT_HTTPS:-443}:443"          # HTTPS : à décommenter avec les deux lignes ci-dessous
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      # - ./docker/https.conf:/etc/nginx/conf.d/https.conf:ro
+      # - ./certs:/etc/nginx/certs:ro
+    networks: [interne]
+
+  web:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      POSTGRES_HOST: db
+      # l'application ne fait confiance qu'au réseau Docker interne, où seul Nginx peut lui parler
+      PROXYS_DE_CONFIANCE: ${RESEAU_DOCKER:-172.31.250.0/24}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [interne]          # aucun port publié : on passe obligatoirement par Nginx
+
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - donnees_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: [interne]
+
+  # Boîte de réception de test : capte tous les e-mails envoyés par l'application.
+  # À retirer quand le compte de messagerie générique sera configuré (voir docs/INSTALLATION.md, §6).
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    environment:
+      MP_UI_AUTH: "${MAILPIT_UTILISATEUR:-test}:${MAILPIT_MOT_DE_PASSE:?renseigner MAILPIT_MOT_DE_PASSE dans .env}"
+      MP_MAX_MESSAGES: 500
+    ports:
+      - "${PORT_MAILPIT:-8025}:8025"
+    networks: [interne]
+
+networks:
+  interne:
+    ipam:
+      config:
+        - subnet: ${RESEAU_DOCKER:-172.31.250.0/24}
+
+volumes:
+  donnees_pg:

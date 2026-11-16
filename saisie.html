@@ -1,0 +1,62 @@
+{% extends "planning/base.html" %}
+{% block titre %}{% if iv %}Modifier{% else %}Nouvelle intervention{% endif %}{% endblock %}
+{% block contenu %}
+<form class="page" id="form-intervention" method="post" novalidate>{% csrf_token %}
+  <h1>{% if iv %}Modifier l'intervention{% else %}Nouvelle intervention{% endif %} <span class="muted" style="font-size:16px">· {{ site.nom }}</span></h1>
+  {% if form.errors %}<div class="err" role="alert">Le formulaire contient des erreurs : vérifiez les champs signalés.</div>{% endif %}
+  {% if form.non_field_errors %}<div class="err">{{ form.non_field_errors|join:" " }}</div>{% endif %}
+  <div class="grid2">
+    {% include "planning/_champ.html" with champ=form.type %}
+    <div class="f"><span>Hôte (responsable)</span><div class="ro">{{ hote }}</div><span class="helptext">Rempli d'après le compte de la personne qui déclare.</span></div>
+    {% include "planning/_champ.html" with champ=form.description full=True %}
+  </div>
+  <fieldset><legend>Lieu</legend>
+    <div class="seg" role="radiogroup" aria-label="Étendue">{% for r in form.portee %}<div><label>{{ r.tag }}{{ r.choice_label }}</label></div>{% endfor %}</div>
+    {{ form.portee.errors }}
+    <div data-portee="zone niveau" class="grid2">
+      {% include "planning/_champ.html" with champ=form.zone %}
+      <div data-portee="niveau" style="margin:0">{% include "planning/_champ.html" with champ=form.niveau %}</div>
+    </div>
+    <div data-portee="salles">
+      <div class="f"><label for="recherche-salle">Rechercher une salle <span class="muted" style="font-weight:400">(code, libellé ou niveau)</span></label>
+        <input type="search" id="recherche-salle" placeholder="ex. G109, réserve, 2e étage" autocomplete="off"></div>
+      <div class="roomlist" id="liste-salles">
+        {% for s in salles %}<label data-cherche="{{ s.code|lower }} {{ s.libelle|lower }} {{ s.zone.code|lower }} {{ s.niveau|lower }}">
+          <input type="checkbox" name="salles" value="{{ s.pk }}" data-code="{{ s.code }}" {% if s.pk|stringformat:'s' in choisies %}checked{% endif %}>
+          <span class="mono">{{ s.code }}</span><span>{% if s.libelle %}{{ s.libelle }}{% else %}<span class="muted">Libellé à compléter</span>{% endif %}</span>
+          <span class="where">{{ s.zone.code }} · {{ s.niveau }}</span></label>
+        {% empty %}<p class="empty">Aucune salle enregistrée pour ce site : choisissez « Tout le site » ou demandez à l'administrateur d'importer les locaux.</p>{% endfor %}
+        <p class="empty" id="aucune-salle" hidden>Aucune salle ne correspond.</p>
+      </div>
+      <div class="picked" id="salles-choisies"></div>
+      {{ form.salles.errors }}
+    </div>
+    <div style="margin-top:10px">{% include "planning/_champ.html" with champ=form.precision %}</div>
+  </fieldset>
+  <fieldset><legend>Dates et horaires</legend>
+    <div class="grid2">
+      {% include "planning/_champ.html" with champ=form.date_debut %}
+      {% include "planning/_champ.html" with champ=form.date_fin %}
+      <label class="inline full">{{ form.journee_entiere }} Journée entière</label>
+      {% include "planning/_champ.html" with champ=form.heure_debut %}
+      {% include "planning/_champ.html" with champ=form.heure_fin %}
+    </div>
+    <p class="hint" style="margin:8px 0 0">Sur plusieurs jours, les horaires s'appliquent à chaque jour.</p>
+  </fieldset>
+  <fieldset><legend>Entreprise et sécurité</legend>
+    <div class="grid2">
+      {% include "planning/_champ.html" with champ=form.entreprise %}
+      {% include "planning/_champ.html" with champ=form.protocole %}
+      <div class="checks full">
+        <label class="inline">{{ form.proxyclick }} Proxyclick fait</label>
+        <label class="inline">{{ form.visite_prevention }} Visite de prévention faite</label>
+        <label class="inline">{{ form.plan_prevention }} Plan de prévention fait</label>
+      </div>
+      {% include "planning/_champ.html" with champ=form.observations full=True %}
+    </div>
+  </fieldset>
+  {{ niveaux_par_zone|json_script:"niveaux-par-zone" }}
+  <div class="actions"><button class="btn primary" type="submit">Enregistrer</button>
+    <a class="btn ghost" href="{% if iv %}{% url 'planning:detail' site.code iv.pk %}{% else %}{% url 'planning:semaine' site.code %}{% endif %}">Annuler</a></div>
+</form>
+{% endblock %}

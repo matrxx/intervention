@@ -1,0 +1,5 @@
+{% extends "planning/base.html" %}
+{% block titre %}Nouveau mot de passe{% endblock %}
+{% block contenu %}<section class="page narrow"><h1>Nouveau mot de passe</h1>
+{% if validlink %}<form method="post" style="display:flex;flex-direction:column;gap:12px">{% csrf_token %}{% include "planning/_champ.html" with champ=form.new_password1 %}{% include "planning/_champ.html" with champ=form.new_password2 %}<button class="btn primary" type="submit">Enregistrer</button></form>
+{% else %}<p>Ce lien n'est plus valable. Faites une nouvelle demande.</p><a class="btn" href="{% url 'planning:reinit' %}">Nouvelle demande</a>{% endif %}</section>{% endblock %}

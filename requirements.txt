@@ -1,0 +1,4 @@
+Django>=5.2.19,<5.3        # version LTS, maintenue jusqu'en avril 2028
+psycopg[binary]>=3.3,<3.4
+gunicorn>=26,<27
+whitenoise>=6.12,<7

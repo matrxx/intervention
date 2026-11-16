@@ -1,0 +1,28 @@
+{% extends "planning/base.html" %}
+{% block titre %}Connexion{% endblock %}
+{% block contenu %}
+<section class="page narrow">
+  <div class="net"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    <span><b>Réseau du ministère</b> · accès réservé aux sites de Versailles et du Louvre, et au VPN</span></div>
+  <h1>Connexion</h1>
+  <form method="post" novalidate>{% csrf_token %}
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <fieldset><legend>Site</legend>
+        <div class="sitecards">{% for s in sites %}<label><input type="radio" name="site" value="{{ s.pk }}" {% if form.site.value|stringformat:'s' == s.pk|stringformat:'s' %}checked{% endif %} required><b>{{ s.nom }}</b><span>{{ s.nom_long }}</span></label>{% endfor %}</div>
+        {{ form.site.errors }}
+      </fieldset>
+      {% if form.non_field_errors %}<div class="err" role="alert">{{ form.non_field_errors|join:" " }}</div>{% endif %}
+      <div class="f"><label for="id_email">Adresse e-mail professionnelle</label><input type="email" name="email" id="id_email" value="{{ form.email.value|default:'' }}" placeholder="prenom.nom@culture.gouv.fr" autocomplete="username" required>{{ form.email.errors }}</div>
+      <div class="f"><label for="id_password">Mot de passe</label><input type="password" name="password" id="id_password" autocomplete="current-password" required>{{ form.password.errors }}</div>
+      <button class="btn primary" type="submit">Se connecter</button>
+    </div>
+  </form>
+  {% if renvoi %}<form method="post" action="{% url 'planning:renvoyer_activation' %}">{% csrf_token %}<input type="hidden" name="email" value="{{ renvoi }}"><button class="btn" type="submit">Renvoyer le lien d'activation</button></form>{% endif %}
+  <div class="actions"><a href="{% url 'planning:inscription' %}">Créer un compte</a><span class="muted">·</span><a href="{% url 'planning:reinit' %}">Mot de passe oublié ?</a></div>
+  <ul class="rules">
+    <li>Seules les adresses @culture.gouv.fr, vérifiées par un lien envoyé par e-mail.</li>
+    <li>{{ essais_max }} essais infructueux bloquent la connexion {{ blocage }} minutes.</li>
+    <li>Session fermée après 8 heures d'inactivité.</li>
+  </ul>
+</section>
+{% endblock %}

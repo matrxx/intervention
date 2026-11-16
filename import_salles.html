@@ -1,0 +1,32 @@
+{% extends "planning/base.html" %}
+{% block titre %}Import des locaux{% endblock %}
+{% block contenu %}
+<section class="page" style="max-width:980px">
+  <a href="{% url 'planning:administration' site.code %}">← Administration</a>
+  <h1>Importer la liste des locaux</h1>
+  <p>Fichier CSV (séparateur point-virgule, comme l'enregistre Excel en « CSV (séparateur : point-virgule) »), une ligne par salle, avec les colonnes :
+    {% for c in colonnes %}<code>{{ c }}</code>{% if not forloop.last %} ; {% endif %}{% endfor %}.
+    Le fichier peut contenir les deux sites ; chaque ligne indique son site (<code>versailles</code> ou <code>louvre</code>).</p>
+  <p class="actions"><a class="btn ghost" href="{% url 'planning:modele_import' %}">Télécharger le modèle</a><a class="btn ghost" href="{% url 'planning:export_salles' %}">Exporter la liste actuelle</a></p>
+  <form method="post" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:12px">{% csrf_token %}
+    {% include "planning/_champ.html" with champ=form.fichier %}
+    <fieldset><legend>Mode</legend>{% for r in form.mode %}<div><label class="inline">{{ r.tag }} {{ r.choice_label }}</label></div>{% endfor %}</fieldset>
+    <div class="actions"><button class="btn" type="submit">Vérifier le fichier</button><span class="hint">Rien n'est modifié à cette étape : un aperçu s'affiche.</span></div>
+  </form>
+  {% if analyse %}
+    <h2 style="font-size:19px">Aperçu</h2>
+    {% if analyse.erreurs %}
+      <p class="err">{{ analyse.erreurs|length }} erreur{{ analyse.erreurs|length|pluralize }} : corrigez le fichier puis déposez-le à nouveau.</p>
+      <div class="tablewrap"><table><thead><tr><th>Ligne</th><th>Problème</th></tr></thead><tbody>
+        {% for num, msg in analyse.erreurs|slice:":100" %}<tr><td>{{ num }}</td><td>{{ msg }}</td></tr>{% endfor %}</tbody></table></div>
+    {% else %}
+      <div class="tablewrap"><table class="stats"><thead><tr><th>Site</th><th>Lignes</th><th>Nouvelles</th><th>Modifiées</th><th>Inchangées</th><th>Désactivées</th></tr></thead><tbody>
+        {% for nom, s in analyse.stats.items %}<tr><td>{{ nom }}</td><td><b>{{ s.total }}</b></td><td>{{ s.nouvelles }}</td><td>{{ s.modifiees }}</td><td>{{ s.inchangees }}</td><td>{{ s.desactivees }}</td></tr>{% endfor %}
+      </tbody></table></div>
+      {% if analyse.zones_nouvelles %}<p>Zones créées : {{ analyse.zones_nouvelles|join:", " }}.</p>{% endif %}
+      <p class="hint">Les salles ne sont jamais supprimées : celles qui disparaissent du fichier sont seulement désactivées (en mode « Remplacer »), pour garder l'historique des interventions.</p>
+      <form method="post">{% csrf_token %}<input type="hidden" name="confirmer" value="1"><button class="btn primary" type="submit">Confirmer l'import</button></form>
+    {% endif %}
+  {% endif %}
+</section>
+{% endblock %}

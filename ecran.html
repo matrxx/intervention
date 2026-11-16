@@ -1,0 +1,28 @@
+{% extends "planning/base.html" %}
+{% block titre %}Écran{% endblock %}
+{% block tete %}<meta http-equiv="refresh" content="{{ rafraichir }}">{% endblock %}
+{% block classe_body %}ecran-body{% endblock %}
+{% block corps %}
+<section class="screen">
+  {% include "planning/_bandeau.html" with bandeau_texte=bandeau duree=duree_bandeau %}
+  <div class="screen-head">
+    <div><h1>Interventions de la semaine {{ num_semaine }}</h1><p>{{ libelle }} · {{ site.nom_long|default:site.nom }}</p></div>
+    <div class="clock"><b id="horloge">{{ maintenant|time:"H:i" }}</b><span>{{ auj_long }}</span></div>
+  </div>
+  <div class="legend">{% for t in types %}<span style="--c:{{ t.couleur }}"><i></i>{{ t.nom }}</span>{% endfor %}</div>
+  <div class="scols" style="--n:{{ nb }}">{% for j in jours %}
+    <div class="scol{% if j.aujourdhui %} today{% endif %}"><h2>{{ j.nom }} {{ j.date.day }}{% if j.aujourdhui %}<small>Aujourd'hui</small>{% endif %}</h2>
+      {% for iv, rang in j.tous %}<div class="sev" style="--c:{{ iv.type.couleur }}">
+        <span class="ty">{{ iv.type.nom }}{% if iv.sur_plusieurs_jours %} · jour {{ rang }}/{{ iv.nb_jours }}{% endif %}</span>
+        <span class="t">{% if iv.journee_entiere %}Toute la journée{% else %}{{ iv.horaire }}{% endif %}</span>
+        <span class="pl">{{ iv.lieu }}</span>
+        <span class="d">{{ iv.description }}</span>
+        <span class="h">Hôte : {{ iv.hote }}</span>
+        {% if iv.securite_faite %}<span class="ssec">{% for l in iv.securite_faite %}<span>✓ {{ l }}</span>{% endfor %}</span>{% endif %}
+      </div>{% empty %}<p class="empty">Aucune intervention</p>{% endfor %}
+    </div>{% endfor %}
+  </div>
+  <div class="screen-foot"><span>Mise à jour automatique toutes les {{ rafraichir_min }} minute{{ rafraichir_min|pluralize }} · dernière à {{ maintenant|time:"H\hi" }}</span>
+    <button class="btn" id="plein-ecran" type="button">Plein écran</button></div>
+</section>
+{% endblock %}
